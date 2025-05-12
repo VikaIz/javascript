@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Таблица животных</title>
+    <style></style>
+  </head>
+  <body>
+    <h1>Генератор таблицы животных</h1>
+
+    <div class="instructions">
+      <p>
+        Введите количество строк таблицы. В каждой строке будет по 6 животных (3
+        собаки и 2 кота) в последовательности:
+      </p>
+      <p>
+        dog dog dog cat cat dog<br />
+        dog dog cat cat dog dog<br />
+        dog cat cat dog dog dog<br />
+        cat cat dog dog dog cat<br />
+        cat dog dog dog cat cat
+      </p>
+      <p>Результат будет выведен в консоль браузера (F12).</p>
+    </div>
+
+    <div class="input-container">
+      <input type="number" id="rowCount" placeholder="Число строк" min="1" />
+      <button id="drawButton">Рисовать</button>
+    </div>
+
+    <div id="errorMessage" class="error"></div>
+
+    <script>
+      document
+        .getElementById("drawButton")
+        .addEventListener("click", function () {
+          const rowCountInput = document.getElementById("rowCount");
+          const errorMessage = document.getElementById("errorMessage");
+
+          errorMessage.textContent = "";
+
+          const rowCount = parseInt(rowCountInput.value);
+
+          if (isNaN(rowCount) || rowCount < 1) {
+            errorMessage.textContent =
+              "Пожалуйста, введите целое число больше 0";
+            return;
+          }
+
+          generateAnimalTable(rowCount);
+          errorMessage.textContent = `Таблица из ${rowCount} строк выведена в консоль (нажмите F12)`;
+          errorMessage.style.color = "#2ecc71";
+        });
+
+      function generateAnimalTable(rowCount) {
+        const patterns = [
+          ["dog", "dog", "dog", "cat", "cat", "dog"],
+          ["dog", "dog", "cat", "cat", "dog", "dog"],
+          ["dog", "cat", "cat", "dog", "dog", "dog"],
+          ["cat", "cat", "dog", "dog", "dog", "cat"],
+          ["cat", "dog", "dog", "dog", "cat", "cat"],
+        ];
+
+        console.clear();
+        console.log(`Таблица животных (${rowCount} строк):\n`);
+        for (let i = 0; i < rowCount; i++) {
+          // Выбираем паттерн (циклически повторяем 5 вариантов)
+          const pattern = patterns[i % patterns.length];
+          const row = pattern.join("\t");
+          console.log(row);
+        }
+      }
+    </script>
+  </body>
+</html>

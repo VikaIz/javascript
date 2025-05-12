@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Считать ворон</title>
+  </head>
+  <body>
+    <h1>Считать ворон</h1>
+
+    <div class="form-group">
+      <label for="num">Количество ворон:</label>
+      <input type="number" id="num" min="0" placeholder="Введите число" />
+    </div>
+
+    <button id="countBtn">Считать</button>
+
+    <script>
+      document
+        .getElementById("countBtn")
+        .addEventListener("click", function () {
+          const num = parseInt(document.getElementById("num").value);
+
+          // Определяем правильное окончание
+          let ending;
+          const lastDigit = num % 10;
+          const lastTwoDigits = num % 100;
+
+          if (lastTwoDigits >= 11 && lastTwoDigits <= 14) {
+            ending = "ворон";
+          } else {
+            switch (lastDigit) {
+              case 1:
+                ending = "ворона";
+                break;
+              case 2:
+              case 3:
+              case 4:
+                ending = "вороны";
+                break;
+              default:
+                ending = "ворон";
+            }
+          }
+
+          alert(`На ветке сидит ${num} ${ending}`);
+        });
+    </script>
+  </body>
+</html>

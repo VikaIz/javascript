@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ввод числа</title>
+  </head>
+  <body>
+    <h1>Ввод числа</h1>
+    <a href="../index.html" id="numberLink">Получить число</a>
+
+    <script>
+      document
+        .getElementById("numberLink")
+        .addEventListener("click", function (event) {
+          event.preventDefault(); // Отменяем стандартное поведение ссылки
+
+          function validateNumber() {
+            while (true) {
+              const input = prompt("Пожалуйста, введите число больше 100:");
+
+              // Если нажали Cancel/ESC
+              if (input === null) {
+                return false;
+              }
+
+              // Проверяем, что введено число и оно > 100
+              const number = Number(input);
+              if (!isNaN(number) && number > 100) {
+                return true;
+              }
+
+              alert("Некорректный ввод! Пожалуйста, введите число больше 100.");
+            }
+          }
+
+          const isValid = validateNumber();
+
+          if (isValid) {
+            // Если введено корректное число - переходим по ссылке
+            window.location.href = this.href;
+          } else {
+            // Если отменили - запрашиваем подтверждение
+            const shouldProceed = confirm(
+              "Вы отменили ввод. Перейти на главную страницу?"
+            );
+            if (shouldProceed) {
+              window.location.href = this.href;
+            }
+          }
+        });
+    </script>
+  </body>
+</html>
