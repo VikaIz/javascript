@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Редактируемый div</title>
+    <style>
+      #editableDiv {
+        width: 300px;
+        min-height: 100px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        white-space: pre-wrap; /* Сохраняет переносы строк */
+      }
+      #editableTextarea {
+        width: 300px;
+        height: 100px;
+        padding: 10px;
+        font-family: inherit;
+        display: none; /* Изначально скрыт */
+      }
+    </style>
+  </head>
+  <body>
+    <div id="editableDiv">
+      Нажмите <strong>Ctrl+E</strong>, чтобы редактировать этот текст.<br />Используйте
+      <strong>Ctrl+S</strong> для сохранения или <strong>Esc</strong> для
+      отмены.
+    </div>
+    <textarea id="editableTextarea"></textarea>
+
+    <script>
+      const div = document.getElementById("editableDiv");
+      const textarea = document.getElementById("editableTextarea");
+
+      // Обработчик нажатия клавиш
+      document.addEventListener("keydown", function (e) {
+        // Ctrl+E - активировать редактирование
+        if (e.ctrlKey && e.key === "e") {
+          e.preventDefault();
+          activateTextarea();
+        }
+        // Ctrl+S - сохранить изменения
+        else if (e.ctrlKey && e.key === "s") {
+          e.preventDefault();
+          saveChanges();
+        }
+        // Esc - отменить редактирование
+        else if (e.key === "Escape") {
+          cancelEditing();
+        }
+      });
+
+      // Включаем textarea
+      function activateTextarea() {
+        textarea.value = div.innerHTML.replace(/<br>/g, "\n"); // Заменяем <br> на переносы строк
+        div.style.display = "none";
+        textarea.style.display = "block";
+        textarea.focus();
+      }
+
+      // Сохраняем изменения
+      function saveChanges() {
+        if (textarea.style.display === "block") {
+          div.innerHTML = textarea.value.replace(/\n/g, "<br>"); // Заменяем переносы на <br>
+          div.style.display = "block";
+          textarea.style.display = "none";
+        }
+      }
+
+      // Отмена редактирования
+      function cancelEditing() {
+        if (textarea.style.display === "block") {
+          div.style.display = "block";
+          textarea.style.display = "none";
+        }
+      }
+    </script>
+  </body>
+</html>

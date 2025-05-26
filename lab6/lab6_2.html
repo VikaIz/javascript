@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Плейсхолдер с подсказкой</title>
+    <style>
+      .input-container {
+        position: relative;
+        margin: 20px;
+      }
+
+      input {
+        padding: 10px;
+        width: 300px;
+        font-size: 16px;
+      }
+
+      .placeholder {
+        color: blue;
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        pointer-events: none;
+        transition: all 0.3s ease;
+        background: white;
+        padding: 0 5px;
+      }
+
+      .placeholder.hint {
+        top: -10px;
+        font-size: 12px;
+        color: #666;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: #4a90e2;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="input-container">
+      <input type="text" id="nameInput" data-placeholder="Введите ваше имя" />
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const input = document.getElementById("nameInput");
+        const placeholderText = input.getAttribute("data-placeholder");
+
+        // Создаем элемент плейсхолдера
+        const placeholder = document.createElement("span");
+        placeholder.className = "placeholder";
+        placeholder.textContent = placeholderText;
+        input.parentNode.insertBefore(placeholder, input);
+
+        // Обработчик фокуса
+        input.addEventListener("focus", function () {
+          placeholder.classList.add("hint");
+        });
+
+        // Обработчик потери фокуса
+        input.addEventListener("blur", function () {
+          if (input.value === "") {
+            placeholder.classList.remove("hint");
+          }
+        });
+
+        // Обработчик ввода (на случай, если пользователь начал вводить текст)
+        input.addEventListener("input", function () {
+          if (input.value !== "") {
+            placeholder.classList.add("hint");
+          }
+        });
+
+        // Инициализация (если поле уже заполнено при загрузке)
+        if (input.value !== "") {
+          placeholder.classList.add("hint");
+        }
+      });
+    </script>
+  </body>
+</html>
